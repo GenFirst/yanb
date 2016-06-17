@@ -18,11 +18,15 @@ exports.create = function (req, res, next) {
 };
 
 exports.get = function (req, res, next) {
-    Post.find(function(err, posts){
+    Post.find(function (err, posts) {
         if (err) {
             next(err);
         } else {
             res.json(posts);
         }
     });
+};
+
+exports.getById = function (req, res, next) {
+    Post.findOne
 };

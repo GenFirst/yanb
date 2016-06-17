@@ -41,9 +41,9 @@ module.exports = function () {
         res.send(err);
     });
 
-
     //add routes
-    require('../app/routes/posts.server.routes.js')(app);
+    //require('../app/routes/posts.server.routes.js')(app)
+    app.use('/api/v1', require('../app/routes/posts.server.routes.js'));
 
     return app;
 };
