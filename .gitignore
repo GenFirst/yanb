@@ -1,0 +1,5 @@
+#nde specific ignores
+node-modules
+
+#environment ignores
+.idea

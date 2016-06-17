@@ -1,0 +1,13 @@
+{
+  "name": "yanb",
+  "version": "0.0.1",
+  "description": "Yet another NodeJS blog",
+  "keywords": ["blog", "tech", "basic"],
+  "license": "MIT",
+  "dependencies": {
+    "express" : "~4.8.8"
+  },
+  "devDependencies": {
+
+  }
+}
