@@ -1,6 +1,7 @@
 /**
  * Created by vdimitrieski on 17.6.16..
  */
+'use strict';
 
 var Post = require('mongoose').model('Post');
 

@@ -1,6 +1,8 @@
 /**
  * Created by vdimitrieski on 17.6.16..
  */
+'use strict';
+
 var router = require('express').Router();
 var posts = require('../../app/controllers/posts.server.controller');
 

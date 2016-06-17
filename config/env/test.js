@@ -4,5 +4,5 @@
 'use strict';
 
 module.exports = {
-// Production configuration options
+    db: 'mongodb://localhost/yanb-test'
 };
