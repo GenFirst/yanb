@@ -18,5 +18,11 @@ exports.create = function (req, res, next) {
 };
 
 exports.get = function (req, res, next) {
-
+    Post.find(function(err, posts){
+        if (err) {
+            next(err);
+        } else {
+            res.json(posts);
+        }
+    });
 };

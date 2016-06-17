@@ -6,13 +6,13 @@ var mongoose = require('mongoose'),
 
 var PostSchema = new Schema({
     title: {type: String, required: true},
-    body: {type: String, required: true},
-    created: {type: Date, default: Date.now},
-    edited: {type: Date, default: Date.now}
+    body: {type: String, required: true}
     //objectid ref
     // author: {type: String}
     //array of comments
     // comments: [type: CategorySchema]
+}, {
+    timestamps: true
 });
 
 mongoose.model('Post', PostSchema);
