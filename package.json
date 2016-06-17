@@ -2,12 +2,23 @@
   "name": "yanb",
   "version": "0.0.1",
   "description": "Yet another NodeJS blog",
-  "keywords": ["blog", "tech", "basic"],
+  "keywords": [
+    "blog",
+    "basic",
+    "genfirst"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/GenFirst/yanb"
+  },
   "license": "MIT",
   "dependencies": {
-    "express" : "~4.8.8"
+    "body-parser": "~1.8.0",
+    "compression": "~1.0.11",
+    "express": "~4.8.8",
+    "method-override": "~2.2.0",
+    "mongoose": "^4.5.0",
+    "morgan": "~1.3.0"
   },
-  "devDependencies": {
-
-  }
+  "devDependencies": {}
 }
