@@ -7,7 +7,14 @@ var posts = require('../../app/controllers/posts.server.controller');
 
 router.route('/posts')
     .post(posts.create)
-    .get(posts.get);
+    .get(posts.getAll);
+
+router.route('/posts/:postId')
+    .get(posts.getOne)
+    .put(posts.update)
+    .delete(posts.delete);
+
+router.param('postId', posts.getById);
 
 
 module.exports = router;

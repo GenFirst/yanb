@@ -17,7 +17,27 @@ exports.create = function (req, res, next) {
     });
 };
 
-exports.get = function (req, res, next) {
+exports.update = function (req, res, next) {
+    Post.findByIdAndUpdate(req.post._id, req.body, {new: true}, function (err, post) {
+        if (err) {
+            next(err);
+        } else {
+            res.json(post);
+        }
+    });
+};
+
+exports.delete = function (req, res, next) {
+    req.post.remove(function (err) {
+        if (err) {
+            next(err);
+        } else {
+            res.json(req.post);
+        }
+    });
+};
+
+exports.getAll = function (req, res, next) {
     Post.find(function (err, posts) {
         if (err) {
             next(err);
@@ -27,6 +47,17 @@ exports.get = function (req, res, next) {
     });
 };
 
-exports.getById = function (req, res, next) {
-    Post.findOne
+exports.getOne = function (req, res) {
+    res.json(req.post);
+};
+
+exports.getById = function (req, res, next, id) {
+    Post.findOne({_id: id}, function (err, post) {
+        if (err) {
+            next(err);
+        } else {
+            req.post = post;
+            next();
+        }
+    });
 };
