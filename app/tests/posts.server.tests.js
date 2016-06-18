@@ -17,10 +17,6 @@ describe('posts', function () {
         UserModel = require('mongoose').model('User');
     });
 
-    after(function () {
-        //TODO delete the inserted user
-    });
-
     describe('#post', function () {
 
         before(function (done) {
@@ -122,7 +118,12 @@ describe('posts', function () {
     describe('#update', function () {
         var post;
         before(function (done) {
-            post = new PostModel({title: 'My First Post', body: 'My first body post'});
+            post = new PostModel({
+                title: 'My First Post',
+                body: 'My first body post',
+                tags: [{name: 'tech'}, {name: 'nodejs'}],
+                comments: [{body: 'A first negative comment', author: 'jdoe'}]
+            });
             post.save(function (err, p) {
                 post = p;
                 done();
@@ -136,10 +137,9 @@ describe('posts', function () {
             });
         });
 
-        it('update post', function (done) {
+        it('update post - basic info', function (done) {
             var postClone = {
                 title: 'UPDATED',
-                body: post.body,
                 _id: post.id
             };
             superagent
@@ -147,10 +147,61 @@ describe('posts', function () {
                 .send(postClone)
                 .end(function (error, result) {
                     result.status.should.equal(200);
-                    result.body.title.should.equal('UPDATED');
+                    result.body.title.should.equal(postClone.title);
                     done();
                 });
         });
+
+        it('update post - add comment', function (done) {
+            var postClone = {
+                comments: post.comments,
+                _id: post.id
+            };
+            var newComment = {body: 'A first POSITIVE comment', author: 'jdoe'};
+            postClone.comments.push(newComment);
+            superagent
+                .put('http://localhost:3000/api/v1/posts/' + postClone._id)
+                .send(postClone)
+                .end(function (error, result) {
+                    result.status.should.equal(200);
+                    result.body.comments.should.have.length(2);
+                    done();
+                });
+        });
+
+        it('update post - add tag', function (done) {
+            var postClone = {
+                tags: post.tags,
+                _id: post.id
+            };
+            var newTag = {name: 'newTag'};
+            postClone.tags.push(newTag);
+            superagent
+                .put('http://localhost:3000/api/v1/posts/' + postClone._id)
+                .send(postClone)
+                .end(function (error, result) {
+                    result.status.should.equal(200);
+                    result.body.tags.should.have.length(3);
+                    done();
+                });
+        });
+
+        //TODO with business logic
+        // it('fail to update - same tag', function (done) {
+        //     var postClone = {
+        //         tags: post.tags,
+        //         _id: post.id
+        //     };
+        //     var newTag = {name: post.tags[0].name};
+        //     postClone.tags.push(newTag);
+        //     superagent
+        //         .put('http://localhost:3000/api/v1/posts/' + postClone._id)
+        //         .send(postClone)
+        //         .end(function (error, result) {
+        //             result.status.should.equal(500);
+        //             done();
+        //         });
+        // });
 
         it('fail to update - post does not exist', function (done) {
             superagent
