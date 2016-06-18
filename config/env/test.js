@@ -4,5 +4,6 @@
 'use strict';
 
 module.exports = {
-    db: 'mongodb://localhost/yanb-test'
+    db: 'mongodb://localhost/yanb-test',
+    jwtSecret: 'testSectet'
 };

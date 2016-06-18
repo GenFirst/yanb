@@ -4,6 +4,8 @@
 'use strict';
 
 var User = require('mongoose').model('User');
+var jwt = require('jsonwebtoken');
+var config = require('../../config/config');
 
 //middleware for create
 exports.create = function (req, res, next) {
@@ -60,5 +62,20 @@ exports.getById = function (req, res, next, id) {
             req.user = user;
             next();
         }
+    });
+};
+
+exports.generateToken = function (req, res, next) {
+    req.token = jwt.sign({
+        id: req.user.id
+    }, config.jwtSecret, {
+        expiresIn: 60 * 120
+    });
+    next();
+};
+
+exports.sendToken = function (req, res, next) {
+    res.status(200).json({
+        token: req.token
     });
 };

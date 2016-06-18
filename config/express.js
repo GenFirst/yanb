@@ -7,7 +7,10 @@ var express = require('express'),
     morgan = require('morgan'), //logger environment
     compress = require('compression'), //response compression
     bodyParser = require('body-parser'), //handle request body data
-    methodOverride = require('method-override'); //legacy support for DELETE and PUT
+    methodOverride = require('method-override'), //legacy support for DELETE and PUT
+    passport = require('passport'), //support for authentication middleware
+    expressJwt = require('express-jwt'), //authentication middleware
+    config = require('./config');
 
 /**
  * Configure express server
@@ -43,9 +46,14 @@ module.exports = function () {
         res.send(err);
     });
 
+    //bootstrap the passport module
+    app.use(passport.initialize());
+    //token handling middleware
+    var authenticate = expressJwt({secret: config.jwtSecret});
+
     //add routes
-    app.use('/api/v1', require('../app/routes/users.server.routes'));
-    app.use('/api/v1', require('../app/routes/posts.server.routes'));
+    app.use('/api/v1', require('../app/routes/users.server.routes')(authenticate));
+    app.use('/api/v1', require('../app/routes/posts.server.routes')(authenticate));
 
     return app;
 };

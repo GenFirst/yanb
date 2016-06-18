@@ -3,20 +3,22 @@
  */
 'use strict';
 
-var router = require('express').Router();
-var posts = require('../../app/controllers/posts.server.controller');
+var router = require('express').Router(),
+ posts = require('../../app/controllers/posts.server.controller');
+
+module.exports = function(authenticate){
+    router.route('/posts')
+        .post(authenticate, posts.create)
+        .get(authenticate, posts.getAll);
+
+    router.route('/posts/:postId')
+        .get(authenticate, posts.getOne)
+        .put(authenticate, posts.update)
+        .delete(authenticate, posts.delete);
+
+    router.param('postId', posts.getById);
+
+    return router;
+};
 
 
-router.route('/posts')
-    .post(posts.create)
-    .get(posts.getAll);
-
-router.route('/posts/:postId')
-    .get(posts.getOne)
-    .put(posts.update)
-    .delete(posts.delete);
-
-router.param('postId', posts.getById);
-
-
-module.exports = router;
