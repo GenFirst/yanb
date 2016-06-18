@@ -5,7 +5,8 @@
 
 var gulp = require('gulp'),
     mocha = require('gulp-mocha'),
-    eslint = require('gulp-eslint');
+    eslint = require('gulp-eslint'),
+    nodemon = require('gulp-nodemon');
 
 //run tests from the appropriate directories
 gulp.task('test', function () {
@@ -25,6 +26,15 @@ gulp.task('lint', function () {
         .pipe(eslint.failAfterError());
 });
 
-gulp.task('watch', function () {
-    gulp.watch('./**/*.js', ['lint']);
+// gulp.task('watch', function () {
+//     gulp.watch('./**/*.js', ['lint']);
+// });
+
+gulp.task('develop', function () {
+    nodemon({
+        script: 'server.js',
+        ext: 'html js',
+        tasks: ['lint'],
+        env: {'NODE_ENV': 'development'}
+    });
 });
