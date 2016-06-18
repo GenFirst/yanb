@@ -6,13 +6,14 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
+
 var PostSchema = new Schema({
     title: {type: String, required: true, maxLength: 140},
-    body: {type: String, required: true, minlength: 10}
-    //objectid ref
-    // author: {type: String}
-    //array of comments
-    // comments: [type: CategorySchema]
+    body: {type: String, required: true, minlength: 10},
+    author: {type: Schema.ObjectId, ref: 'User'},
+    tags: [require('mongoose').model('Tag').schema],
+    comments: [require('mongoose').model('Comment').schema]
+
 }, {
     timestamps: true
 });

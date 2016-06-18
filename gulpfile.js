@@ -26,5 +26,5 @@ gulp.task('lint', function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch('./**/*.js', ['lint', 'test']);
+    gulp.watch('./**/*.js', ['lint']);
 });

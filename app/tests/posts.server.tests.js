@@ -7,44 +7,94 @@ var superagent = require('superagent'),
     should = require('chai').should();
 
 describe('posts', function () {
-    var server;
-    var db;
-    var PostSchema;
 
-    //TODO this could be extracted to the module context and done for all mocha tests
+    var PostModel;
+    var user;
+    var UserModel;
+
     before(function () {
-        process.env.NODE_ENV = 'test';
-        db = require('../../config/mongoose')();
-        server = require('../../config/express')().listen(3000);
-        PostSchema = require('mongoose').model('Post');
+        PostModel = require('mongoose').model('Post');
+        UserModel = require('mongoose').model('User');
     });
 
     after(function () {
-        server.close();
-        db.disconnect();
+        //TODO delete the inserted user
     });
 
     describe('#post', function () {
-        //cleanup the database
-        after(function (done) {
-            PostSchema.remove({}, function () {
+
+        before(function (done) {
+            user = new UserModel({
+                email: 'myemail@gmail.com',
+                password: 'password',
+                firstName: 'John',
+                lastName: 'Doe'
+            });
+
+            user.save(function (err, usr) {
+                user = usr;
                 done();
             });
         });
 
-        it('save a valid user', function (done) {
-            var body = {title: 'My First Post', body: 'My first body post'};
+        after(function (done) {
+            PostModel.remove({}, function () {
+                UserModel.remove({}, function () {
+                    done();
+                });
+            });
+        });
+
+        it('save a valid post - all fields', function (done) {
+            var body = {
+                title: 'My First Post',
+                body: 'My first body post',
+                tags: [{name: 'tech'}, {name: 'nodejs'}],
+                comments: [{body: 'A first negative comment', author: 'jdoe'}],
+                author: user
+            };
             superagent
                 .post('http://localhost:3000/api/v1/posts')
                 .send(body)
                 .end(function (error, result) {
-                    should.not.exist(error);
+                    result.status.should.equal(200);
+                    result.body.tags.should.have.length(2);
+                    result.body.comments.should.have.length(1);
+                    result.body.author.should.equal(user.id);
+                    done();
+                });
+        });
+
+        it('save a valid post - minimum fields', function (done) {
+            var body = {
+                title: 'My First Post',
+                body: 'My first body post'
+            };
+            superagent
+                .post('http://localhost:3000/api/v1/posts')
+                .send(body)
+                .end(function (error, result) {
                     result.status.should.equal(200);
                     done();
                 });
         });
 
-        it('fail to save - empty body', function (done) {
+        it('fail to save - invalid author', function (done) {
+            var body = {
+                title: 'My First Post',
+                body: 'My first body post',
+                author: {_id: (user.id + 1)}
+            };
+            superagent
+                .post('http://localhost:3000/api/v1/posts')
+                .send(body)
+                .end(function (error, result) {
+                    result.status.should.equal(500);
+                    done();
+                });
+        });
+
+        it('fail to save - invalid body', function (done) {
             var body = {title: 'My First Post', body: ''};
             superagent
                 .post('http://localhost:3000/api/v1/posts')
@@ -56,7 +106,7 @@ describe('posts', function () {
                 });
         });
 
-        it('fail to save - empty title', function (done) {
+        it('fail to save - invalid title', function (done) {
             var body = {title: '', body: 'My first body post'};
             superagent
                 .post('http://localhost:3000/api/v1/posts')
@@ -72,7 +122,7 @@ describe('posts', function () {
     describe('#update', function () {
         var post;
         before(function (done) {
-            post = new PostSchema({title: 'My First Post', body: 'My first body post'});
+            post = new PostModel({title: 'My First Post', body: 'My first body post'});
             post.save(function (err, p) {
                 post = p;
                 done();
@@ -81,7 +131,7 @@ describe('posts', function () {
 
         //cleanup the database
         after(function (done) {
-            PostSchema.remove({}, function () {
+            PostModel.remove({}, function () {
                 done();
             });
         });
@@ -115,7 +165,7 @@ describe('posts', function () {
     describe('#delete', function () {
         var post;
         before(function (done) {
-            post = new PostSchema({title: 'My First Post', body: 'My first body post'});
+            post = new PostModel({title: 'My First Post', body: 'My first body post'});
             post.save(function (err, p) {
                 post = p;
                 done();
@@ -124,7 +174,7 @@ describe('posts', function () {
 
         //cleanup the database
         after(function (done) {
-            PostSchema.remove({}, function () {
+            PostModel.remove({}, function () {
                 done();
             });
         });
@@ -153,7 +203,7 @@ describe('posts', function () {
     describe('#get', function () {
         var post;
         before(function (done) {
-            post = new PostSchema({title: 'My First Post', body: 'My first body post'});
+            post = new PostModel({title: 'My First Post', body: 'My first body post'});
             post.save(function (err, p) {
                 post = p;
                 done();
@@ -162,12 +212,12 @@ describe('posts', function () {
 
         //cleanup the database
         after(function (done) {
-            PostSchema.remove({}, function () {
+            PostModel.remove({}, function () {
                 done();
             });
         });
 
-        it('get all valid users', function (done) {
+        it('get all valid posts', function (done) {
             superagent
                 .get('http://localhost:3000/api/v1/posts')
                 .end(function (error, result) {
@@ -177,7 +227,7 @@ describe('posts', function () {
                 });
         });
 
-        it('get user by id', function (done) {
+        it('get post by id', function (done) {
             superagent
                 .get('http://localhost:3000/api/v1/posts/' + post._id)
                 .end(function (error, result) {
@@ -187,7 +237,7 @@ describe('posts', function () {
                 });
         });
 
-        it('get user by id - wrong id', function (done) {
+        it('get post by id - wrong id', function (done) {
             superagent
                 .get('http://localhost:3000/api/v1/posts/' + (post._id + 1))
                 .end(function (error, result) {
