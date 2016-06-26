@@ -9,10 +9,10 @@ var router = require('express').Router(),
 module.exports = function(authenticate){
     router.route('/posts')
         .post(authenticate, posts.create)
-        .get(authenticate, posts.getAll);
+        .get(posts.getAll);
 
     router.route('/posts/:postId')
-        .get(authenticate, posts.getOne)
+        .get(posts.getOne)
         .put(authenticate, posts.update)
         .delete(authenticate, posts.delete);
 

@@ -8,7 +8,7 @@ var Post = require('mongoose').model('Post');
 //middleware for create
 exports.create = function (req, res, next) {
     var post = new Post(req.body);
-
+    post.author = req.user.id; //attach authenticated user as the author
     post.save(function (err) {
         if (err) {
             next(err);

@@ -13,7 +13,7 @@ module.exports = function (authenticate) {
             users.generateToken, users.sendToken);
 
     router.route('/users')
-        .post(authenticate, users.create)
+        .post(users.create)
         .get(authenticate, users.getAll);
 
     router.route('/users/:userId')

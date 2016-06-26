@@ -3,15 +3,18 @@
  */
 'use strict';
 
-var db, server;
+var db, server, passport;
 
 before(function () {
+    //perform necessary setup for running the server
     process.env.NODE_ENV = 'test';
     db = require('../../config/mongoose')();
     server = require('../../config/express')().listen(3000);
+    passport = require('../../config/passport')();
 });
 
 after(function () {
+    //do the cleanup
     server.close();
     db.disconnect();
     process.env.NODE_ENV = 'development';
