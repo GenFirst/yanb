@@ -2,6 +2,9 @@
   "name": "yanb",
   "version": "0.0.1",
   "description": "Yet another NodeJS blog",
+  "scripts": {
+    "start": "gulp --gulpfile gulpfile.js"
+  },
   "keywords": [
     "blog",
     "basic",
@@ -26,6 +29,7 @@
     "gulp": "~3.9.1",
     "gulp-eslint": "^2.0.0",
     "gulp-mocha": "~2.2.0",
+    "gulp-nodemon": "~2.1.0",
     "mocha": "^2.5.3",
     "superagent": "~2.0.0"
   }

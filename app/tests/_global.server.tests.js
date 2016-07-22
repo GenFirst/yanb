@@ -8,7 +8,7 @@ var db, server;
 before(function () {
     process.env.NODE_ENV = 'test';
     db = require('../../config/mongoose')();
-    server = require('../../config/express')().listen(3000);
+    server = require('../../config/express')().listen(3030);
 });
 
 after(function () {
