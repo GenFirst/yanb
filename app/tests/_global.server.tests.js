@@ -9,7 +9,7 @@ before(function () {
     //perform necessary setup for running the server
     process.env.NODE_ENV = 'test';
     db = require('../../config/mongoose')();
-    server = require('../../config/express')().listen(3000);
+    server = require('../../config/express')().listen(3030);
     passport = require('../../config/passport')();
 });
 

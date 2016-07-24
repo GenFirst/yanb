@@ -18,8 +18,8 @@ var db = mongoose(); //connect to a database
 var app = express(); //start the server
 var passport = passport(); //load the passport module
 
-
-app.listen(3000);
+// uncoment this line when application is not started from nodemon
+//app.listen(3000);
 
 module.exports = app;
 

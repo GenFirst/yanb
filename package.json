@@ -2,6 +2,9 @@
   "name": "yanb",
   "version": "0.0.1",
   "description": "Yet another NodeJS blog",
+  "scripts": {
+    "start": "gulp --gulpfile gulpfile.js"
+  },
   "keywords": [
     "blog",
     "basic",

@@ -32,9 +32,12 @@ gulp.task('lint', function () {
 
 gulp.task('develop', function () {
     nodemon({
-        script: 'server.js',
-        ext: 'html js',
+        script: './bin/www',
+        ext: 'js',
         tasks: ['lint'],
+        legacyWatch: true,
         env: {'NODE_ENV': 'development'}
     });
 });
+
+gulp.task('default', ['develop']);

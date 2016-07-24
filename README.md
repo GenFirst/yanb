@@ -5,9 +5,9 @@ This is a blog made in NodeJS using the MEAN stack (MongoDB, ExpressJS, AngularJ
 ## Prerequisites
 
 * Install Docker
-* (Ubuntu) sudo apt-get install libkrb5-dev 
-** to allow mongoose npm installation
 
 ## Run
 
-* Go to docker directory and run `docker-compose up`to bring up the environment
+Go to root directory:
+* run `docker-compose build` to build images
+* run `docker-compose up`to bring up the environment
