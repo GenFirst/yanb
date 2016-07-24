@@ -5,6 +5,7 @@
 
 var gulp = require('gulp'),
     mocha = require('gulp-mocha'),
+    nodemon = require('gulp-nodemon'),
     eslint = require('gulp-eslint');
 
 //run tests from the appropriate directories
@@ -28,3 +29,9 @@ gulp.task('lint', function () {
 gulp.task('watch', function () {
     gulp.watch('./**/*.js', ['lint']);
 });
+
+gulp.task('develop', function () {
+  nodemon({script: './bin/www', ext: 'js', legacyWatch: true });
+});
+
+gulp.task('default', ['develop']);

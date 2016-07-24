@@ -16,7 +16,9 @@ var mongoose = require('./config/mongoose'),
 var db = mongoose();
 //start the server
 var app = express();
-app.listen(3000);
+
+// uncoment this line when application is not started from nodemon
+//app.listen(3000);
 
 module.exports = app;
 
