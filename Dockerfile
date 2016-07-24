@@ -1,17 +1,14 @@
-FROM node:6.3.0-slim
+FROM node:6.2.1-slim
 
 MAINTAINER ivanvs
 
 RUN apt-get update -qq && apt-get install -y build-essential
 
-RUN apt-get install -y ruby
-RUN gem install sass
-
 RUN mkdir /src
+WORKDIR /src
 
 RUN npm install gulp -g
 
-WORKDIR /src
 ADD package.json /src/package.json
 RUN npm install
 

@@ -13,7 +13,8 @@ services:
   environment:
    - NODE_ENV=development
   volumes:
-   - ".:/src"
+   - .:/src
+   - /src/node_modules
   depends_on:
     - db
   links:

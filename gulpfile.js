@@ -30,7 +30,7 @@ gulp.task('watch', function () {
     gulp.watch('./**/*.js', ['lint']);
 });
 
-gulp.task('develop', ['lint', 'test'], function () {
+gulp.task('develop', function () {
   nodemon({script: './bin/www', ext: 'js', legacyWatch: true });
 });
 
