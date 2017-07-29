@@ -1,22 +1,6 @@
 version: '2'
 services:
  yanb-db:
-  image: mongo:3.2.6
+  image: mongo:3.4.6
   ports:
     - "27017:27017"
- web:
-  build: .
-  ports:
-    - "3000:3000"
-    - "5858:5858"
-    - "35729:35729"
-  environment:
-   - NODE_ENV=development
-  volumes:
-   - .:/src
-   - /src/node_modules
-  depends_on:
-    - yanb-db
-  links:
-    - yanb-db
-

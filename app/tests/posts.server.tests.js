@@ -50,7 +50,7 @@ describe('posts', function () {
                 author: user
             };
             superagent
-                .post('http://localhost:3000/api/v1/posts')
+                .post('http://localhost:3030/api/v1/posts')
                 .send(body)
                 .end(function (error, result) {
                     result.status.should.equal(200);
@@ -67,7 +67,7 @@ describe('posts', function () {
                 body: 'My first body post'
             };
             superagent
-                .post('http://localhost:3000/api/v1/posts')
+                .post('http://localhost:3030/api/v1/posts')
                 .send(body)
                 .end(function (error, result) {
                     result.status.should.equal(200);
@@ -82,7 +82,7 @@ describe('posts', function () {
                 author: {_id: (user.id + 1)}
             };
             superagent
-                .post('http://localhost:3000/api/v1/posts')
+                .post('http://localhost:3030/api/v1/posts')
                 .send(body)
                 .end(function (error, result) {
                     result.status.should.equal(500);
@@ -93,7 +93,7 @@ describe('posts', function () {
         it('fail to save - invalid body', function (done) {
             var body = {title: 'My First Post', body: ''};
             superagent
-                .post('http://localhost:3000/api/v1/posts')
+                .post('http://localhost:3030/api/v1/posts')
                 .send(body)
                 .end(function (error, result) {
                     should.exist(error);
@@ -105,7 +105,7 @@ describe('posts', function () {
         it('fail to save - invalid title', function (done) {
             var body = {title: '', body: 'My first body post'};
             superagent
-                .post('http://localhost:3000/api/v1/posts')
+                .post('http://localhost:3030/api/v1/posts')
                 .send(body)
                 .end(function (error, result) {
                     should.exist(error);
@@ -143,7 +143,7 @@ describe('posts', function () {
                 _id: post.id
             };
             superagent
-                .put('http://localhost:3000/api/v1/posts/' + postClone._id)
+                .put('http://localhost:3030/api/v1/posts/' + postClone._id)
                 .send(postClone)
                 .end(function (error, result) {
                     result.status.should.equal(200);
@@ -160,7 +160,7 @@ describe('posts', function () {
             var newComment = {body: 'A first POSITIVE comment', author: 'jdoe'};
             postClone.comments.push(newComment);
             superagent
-                .put('http://localhost:3000/api/v1/posts/' + postClone._id)
+                .put('http://localhost:3030/api/v1/posts/' + postClone._id)
                 .send(postClone)
                 .end(function (error, result) {
                     result.status.should.equal(200);
@@ -177,7 +177,7 @@ describe('posts', function () {
             var newTag = {name: 'newTag'};
             postClone.tags.push(newTag);
             superagent
-                .put('http://localhost:3000/api/v1/posts/' + postClone._id)
+                .put('http://localhost:3030/api/v1/posts/' + postClone._id)
                 .send(postClone)
                 .end(function (error, result) {
                     result.status.should.equal(200);
@@ -205,7 +205,7 @@ describe('posts', function () {
 
         it('fail to update - post does not exist', function (done) {
             superagent
-                .get('http://localhost:3000/api/v1/posts/' + (post.id + 1))
+                .get('http://localhost:3030/api/v1/posts/' + (post.id + 1))
                 .end(function (error, result) {
                     result.status.should.equal(500);
                     done();
@@ -232,7 +232,7 @@ describe('posts', function () {
 
         it('delete post', function (done) {
             superagent
-                .put('http://localhost:3000/api/v1/posts/' + post.id)
+                .put('http://localhost:3030/api/v1/posts/' + post.id)
                 .send(post)
                 .end(function (error, result) {
                     result.status.should.equal(200);
@@ -243,7 +243,7 @@ describe('posts', function () {
 
         it('fail to delete - post does not exist', function (done) {
             superagent
-                .get('http://localhost:3000/api/v1/posts/' + (post.id + 1))
+                .get('http://localhost:3030/api/v1/posts/' + (post.id + 1))
                 .end(function (error, result) {
                     result.status.should.equal(500);
                     done();
@@ -270,7 +270,7 @@ describe('posts', function () {
 
         it('get all valid posts', function (done) {
             superagent
-                .get('http://localhost:3000/api/v1/posts')
+                .get('http://localhost:3030/api/v1/posts')
                 .end(function (error, result) {
                     result.status.should.equal(200);
                     result.body.should.have.length(1);
@@ -280,7 +280,7 @@ describe('posts', function () {
 
         it('get post by id', function (done) {
             superagent
-                .get('http://localhost:3000/api/v1/posts/' + post._id)
+                .get('http://localhost:3030/api/v1/posts/' + post._id)
                 .end(function (error, result) {
                     result.status.should.equal(200);
                     should.exist(result.body._id);
@@ -290,7 +290,7 @@ describe('posts', function () {
 
         it('get post by id - wrong id', function (done) {
             superagent
-                .get('http://localhost:3000/api/v1/posts/' + (post._id + 1))
+                .get('http://localhost:3030/api/v1/posts/' + (post._id + 1))
                 .end(function (error, result) {
                     result.status.should.equal(500);
                     done();

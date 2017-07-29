@@ -10,7 +10,7 @@ var gulp = require('gulp'),
 
 //run tests from the appropriate directories
 gulp.task('test', function () {
-    return gulp.src(['./app/tests/**/*.js', './public/tests/**/*.js'])
+    return gulp.src(['./app/tests/**/*.js'])
         .pipe(mocha()) //{reporter:'dot'}
         .once('error', function (err) {
             console.log(err.toString());
