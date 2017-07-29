@@ -1,6 +1,6 @@
 version: '2'
 services:
- db:
+ yanb-db:
   image: mongo:3.2.6
   ports:
     - "27017:27017"
@@ -16,7 +16,7 @@ services:
    - .:/src
    - /src/node_modules
   depends_on:
-    - db
+    - yanb-db
   links:
-    - db
+    - yanb-db
 

@@ -4,5 +4,5 @@
 'use strict';
 
 module.exports = {
-    db: 'mongodb://db/yanb-test'
+    db: 'mongodb://yanb-db/yanb-test'
 };
