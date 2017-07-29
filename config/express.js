@@ -33,9 +33,6 @@ module.exports = function () {
     app.use(bodyParser.json());
     app.use(methodOverride());
 
-    //serve static content
-    app.use(express.static('./public'));
-
     //error middleware
     //TODO put this in development only and for production obscure messages
     app.use(function (err, req, res, next) {
