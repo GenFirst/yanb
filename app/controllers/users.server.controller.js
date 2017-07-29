@@ -6,7 +6,7 @@
 var User = require('mongoose').model('User');
 
 //middleware for create
-exports.create = function (req, res, next) {
+module.exports.create = function (req, res, next) {
     var user = new User(req.body);
 
     user.save(function (err) {
@@ -18,7 +18,7 @@ exports.create = function (req, res, next) {
     });
 };
 
-exports.update = function (req, res, next) {
+module.exports.update = function (req, res, next) {
     User.findByIdAndUpdate(req.user._id, req.body, {new: true}, function (err, user) {
         if (err) {
             next(err);
@@ -28,7 +28,7 @@ exports.update = function (req, res, next) {
     });
 };
 
-exports.delete = function (req, res, next) {
+module.exports.delete = function (req, res, next) {
     req.user.remove(function (err) {
         if (err) {
             next(err);
@@ -38,7 +38,7 @@ exports.delete = function (req, res, next) {
     });
 };
 
-exports.getAll = function (req, res, next) {
+module.exports.getAll = function (req, res, next) {
     User.find(function (err, users) {
         if (err) {
             next(err);
@@ -48,11 +48,11 @@ exports.getAll = function (req, res, next) {
     });
 };
 
-exports.getOne = function (req, res) {
+module.exports.getOne = function (req, res) {
     res.json(req.user);
 };
 
-exports.getById = function (req, res, next, id) {
+module.exports.getById = function (req, res, next, id) {
     User.findOne({_id: id}, function (err, user) {
         if (err) {
             next(err);

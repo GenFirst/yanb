@@ -33,12 +33,14 @@ module.exports = function () {
     app.use(bodyParser.json());
     app.use(methodOverride());
 
+    /* eslint-disable no-unused-vars */
     //error middleware
     //TODO put this in development only and for production obscure messages
     app.use(function (err, req, res, next) {
         res.status(err.status);
         res.send(err);
     });
+    /* eslint-enable no-unused-vars */
 
     //add routes
     app.use('/api/v1', require('../app/routes/users.server.routes'));

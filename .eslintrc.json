@@ -1,8 +1,13 @@
 {
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "plugins": ["node", "mocha"],
+  "extends": ["eslint:recommended", "plugin:node/recommended"],
   "rules": {
-    "curly": "error",
-    "quotes": ["error", "single"],
-    "strict": ["error", "global"],
-    "semi": ["error", "always"]
+    "node/exports-style": ["error", "module.exports"],
+    "node/no-unpublished-require": "off",
+    "mocha/no-exclusive-tests": "error"
   }
 }

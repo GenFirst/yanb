@@ -13,7 +13,7 @@ var mongoose = require('./config/mongoose'),
     express = require('./config/express');
 
 //connect to a database
-var db = mongoose();
+mongoose();
 //start the server
 var app = express();
 
@@ -22,4 +22,6 @@ var app = express();
 
 module.exports = app;
 
+/* eslint-disable no-console */
 console.log('Server running at http://localhost:3000/');
+/* eslint-enable no-console */

@@ -20,7 +20,7 @@ gulp.task('test', function () {
 
 //test the quality of the code with ESLint
 gulp.task('lint', function () {
-    return gulp.src(['**/*.js', '!node_modules/**'])
+    return gulp.src(['**/*.js', '!node_modules/**', '!gulpfile.js'])
         .pipe(eslint())
         .pipe(eslint.formatEach())
         .pipe(eslint.failAfterError());
