@@ -7,7 +7,9 @@ var express = require('express'),
     morgan = require('morgan'), //logger environment
     compress = require('compression'), //response compression
     bodyParser = require('body-parser'), //handle request body data
-    methodOverride = require('method-override'); //legacy support for DELETE and PUT
+    methodOverride = require('method-override'),//legacy support for DELETE and PUT
+    swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = require('./swagger.json');
 
 /**
  * Configure express server
@@ -43,6 +45,7 @@ module.exports = function () {
     /* eslint-enable no-unused-vars */
 
     //add routes
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, true)); //show explorer
     app.use('/api/v1', require('../app/routes/users.server.routes'));
     app.use('/api/v1', require('../app/routes/posts.server.routes'));
 

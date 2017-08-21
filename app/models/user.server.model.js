@@ -12,10 +12,6 @@ var UserSchema = new Schema({
         trim: true, unique: true,
         match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
     },
-    password: {
-        type: String, required: true,
-        minlength: 6, select: false
-    },
     firstName: {type: String},
     lastName: {type: String}
 }, {
